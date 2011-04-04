@@ -1,6 +1,6 @@
 {
 	"name":  "hashr",
-	"version": "0.1",
+	"version": "0.5",
 	"description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
 	"browser_action": {
 		"default_icon": "icon.png",

@@ -12,6 +12,22 @@
 		display: none;
 		text-align: center;
 	}
+	#copy_button {
+		background: url(chrome-extension://mnegbnjoanefpcfifocichegeogidapj/copy_up.png) no-repeat;
+		border: 0;
+		width: 16px;
+		height: 16px;
+		margin-top: 10px;
+	}
+	#copy_button:hover {
+		background: url(chrome-extension://mnegbnjoanefpcfifocichegeogidapj/copy_over.png) no-repeat;
+	}
+	#copy_button:active {
+		background: url(chrome-extension://mnegbnjoanefpcfifocichegeogidapj/copy_down.png) no-repeat;
+	}
+	#copied {
+		float: right;
+	}
 </style>
 <script type="text/javascript">
 	var hashrExtension = {
@@ -19,20 +35,6 @@
 		request: null,
 		
 		makeHash: function(){
-			var privateMode = document.getElementById("private_mode").checked;
-
-			if (privateMode) {
-				var str = document.getElementById("str").value;
-				chrome.tabs.executeScript(null, {file: "lib/md5.js"});
-
-				document.getElementById("result_area").style.display = "none";
-				document.getElementById("loading_area").style.display = "block";
-
-				document.getElementById("loading_area").style.display = "none";
-				document.getElementById("result_area").style.display = "block";
-				document.getElementById("result").setAttribute("value", hex_md5(str));
-				return 0;
-			}
 
 			var str = document.getElementById("str").value;
 			var hashtype = document.getElementById("hashtype").value;
@@ -42,7 +44,12 @@
 			document.getElementById("result_area").style.display = "none";
 			document.getElementById("loading_area").style.display = "block";
 			
-			hashrExtension.request.open("POST", "http://rogeriopvl.com/hashr/api2/hash", true);
+			var remoteURL = "http://rogeriopvl.com/hashr/api2/hash";
+			var developmentURL = 'http://localhost/hashr_website/api2/hash';
+
+			remoteURL = developmentURL;
+
+			hashrExtension.request.open("POST", remoteURL, true);
 			hashrExtension.request.onreadystatechange = hashrExtension.getResponse;
 			hashrExtension.request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			hashrExtension.request.send(params);
@@ -58,7 +65,7 @@
 				else{
 					document.getElementById("loading_area").style.display = "none";
 					document.getElementById("result_area").style.display = "block";
-					document.getElementById("result").setAttribute("value", "Erro contacting server...");
+					document.getElementById("result").setAttribute("value", "Error contacting server...");
 				}
 			}
 		},
@@ -66,7 +73,28 @@
 		copyHash: function(){
 			document.getElementById("result").select();
 			document.execCommand("copy", false, null);
-		}
+			hashrExtension.show_copied();
+		},
+
+		// show a copied message in the toolbar
+		show_copied: function() {
+			var copiedLabel = document.getElementById('copied');
+			if (copiedLabel) { return false; }
+
+			var copyContainer = document.getElementById('result_area');
+			var newElement = document.createElement('span');
+			newElement.setAttribute('id', 'copied');
+			newElement.innerHTML = 'Copied!';
+			copyContainer.appendChild(newElement);
+
+			// only show the copied message for 4 seconds
+			 window.setTimeout(function(){
+				 var element = document.getElementById('copied');
+				 if(element){
+					 element.parentNode.removeChild(element);
+				 }
+			 }, 4000);
+		},
 	};
 </script>
 <div id="container">
@@ -113,11 +141,10 @@
 		<option value="haval256,5">HAVAL256,5</option>
 		<option value="htpasswd">HTPASSWD</option>
 	</select> 
-	<label>Private </label><input type="checkbox" name="private_mode" id="private_mode" />
 	<input type="button" name="hashr_bttn" id="hashr_bttn" value="Hash it!" onclick="hashrExtension.makeHash()" /></p>
 	<p id="loading_area"><img src="loader.gif" alt="loading..." /></p>
 	<p id="result_area">
 		<input type="text" name="result" id="result" value="" size="40" readonly="1" />
-		<input type="button" name="copy_button" value="Copy" id="copy_button" onclick="hashrExtension.copyHash()" />
+		<input type="button" name="copy_button" id="copy_button" title="Copy to clipboard" onclick="hashrExtension.copyHash()" />
 	</p>
 </div>
