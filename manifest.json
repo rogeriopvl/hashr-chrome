@@ -3,12 +3,12 @@
 	"version": "0.5",
 	"description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
 	"browser_action": {
-		"default_icon": "icon.png",
+		"default_icon": "images/icon.png",
 		"popup": "popup.html"
 	},
 	"icons": {
-		"48": "icon48.png",
-		"128": "icon128.png"
+		"48": "images/icon48.png",
+		"128": "images/icon128.png"
 	},
 	"permissions": [
 		"tabs", "http://rogeriopvl.com/"
