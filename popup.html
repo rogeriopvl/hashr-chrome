@@ -1,92 +1,94 @@
-<style type="text/css">
-	body {
-		width: 360px;
-		background-color: #b7d6e6;
-		font-size: 12px;
-		min-height: 85px;
-		padding: 10px;
-	}
-	#result_area, #loading_area {
-		display: none;
-		text-align: center;
-	}
-	#input_area {
-		text-align: center;
-	}
-	#copy_button {
-		background: url(/images/copy_up.png) no-repeat;
-		border: 0;
-		width: 16px;
-		height: 16px;
-		position: absolute;
-		margin-top: 4px;
-	}
-	#copy_button:hover {
-		background: url(/images/copy_over.png) no-repeat;
-	}
-	#copy_button:active {
-		background: url(/images/copy_down.png) no-repeat;
-	}
-	#copied {
-		position: absolute;
-		margin-left: 20px;
-		margin-top: 4px;
-	}
-</style>
+<head>
+    <style type="text/css">
+        body {
+            width: 360px;
+            background-color: #b7d6e6;
+            font-size: 12px;
+            min-height: 85px;
+            padding: 10px;
+        }
+        #result_area, #loading_area {
+            display: none;
+            text-align: center;
+        }
+        #input_area {
+            text-align: center;
+        }
+        #copy_button {
+            background: url(/images/copy_up.png) no-repeat;
+            border: 0;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            margin-top: 4px;
+        }
+        #copy_button:hover {
+            background: url(/images/copy_over.png) no-repeat;
+        }
+        #copy_button:active {
+            background: url(/images/copy_down.png) no-repeat;
+        }
+        #copied {
+            position: absolute;
+            margin-left: 20px;
+            margin-top: 4px;
+        }
+    </style>
+    <script type="text/javascript" src="/js/hashr.js"></script>
+</head>
 
 <div id="container">
-	<div id="input_area">
-		<p><input type="text" name="str" id="str" size="30" />
-		<select name="hashtype" id="hashtype" class="selectform">
-			<option value="md2">MD2</option>
-			<option value="md4">MD4</option>
-			<option value="md5" SELECTED>MD5</option>
-			<option value="sha1">SHA1</option>
-			<option value="sha256">SHA256</option>
-			<option value="sha384">SHA384</option>
-			<option value="sha512">SHA512</option>
-			<option value="ripemd128">RIPEMD128</option>
-			<option value="ripemd160">RIPEMD160</option>
-			<option value="ripemd256">RIPEMD256</option>
-			<option value="ripemd320">RIPEMD320</option>
-			<option value="rot13">ROT13</option>
-			<option value="des_std">DES STD</option>
-			<option value="whirlpool">WHIRLPOOL</option>
-			<option value="tiger128,3">TIGER128,3</option>
-			<option value="tiger160,3">TIGER160,3</option>
-			<option value="tiger192,3">TIGER192,3</option>
-			<option value="tiger128,4">TIGER128,4</option>
-			<option value="tiger160,4">TIGER160,4</option>
-			<option value="tiger192,4">TIGER192,4</option>
-			<option value="snefru">SNEFRU</option>
-			<option value="adler32">ADLER32</option>
-			<option value="crc32">CRC32</option>
-			<option value="crc32b">CRC32B</option>
-			<option value="haval128,3">HAVAL128,3</option>
-			<option value="haval160,3">HAVAL160,3</option>
-			<option value="haval192,3">HAVAL192,3</option>
-			<option value="haval224,3">HAVAL224,3</option>
-			<option value="haval256,3">HAVAL256,3</option>
-			<option value="haval128,4">HAVAL128,4</option>
-			<option value="haval160,4">HAVAL160,4</option>
-			<option value="haval192,4">HAVAL192,4</option>
-			<option value="haval224,4">HAVAL224,4</option>
-			<option value="haval256,5">HAVAL256,5</option>
-			<option value="haval128,5">HAVAL128,5</option>
-			<option value="haval160,5">HAVAL160,5</option>
-			<option value="haval192,5">HAVAL192,5</option>
-			<option value="haval224,5">HAVAL224,5</option>
-			<option value="haval256,5">HAVAL256,5</option>
-			<option value="htpasswd">HTPASSWD</option>
-		</select> 
-		<input type="button" name="hashr_bttn" id="hashr_bttn" value="Hash it!" onclick="hashrExtension.makeHash()" /></p>
-	</div>
-	<div id="result_container">
-		<p id="loading_area"><img src="/images/loader.gif" alt="loading..." /></p>
-		<p id="result_area">
-			<input type="text" name="result" id="result" value="" size="40" readonly="1" />
-			<input type="button" name="copy_button" id="copy_button" title="Copy to clipboard" onclick="hashrExtension.copyHash()" />
-		</p>
-	</div>
+    <div id="input_area">
+        <p><input type="text" name="str" id="str" size="30" />
+        <select name="hashtype" id="hashtype" class="selectform">
+            <option value="md2">MD2</option>
+            <option value="md4">MD4</option>
+            <option value="md5" SELECTED>MD5</option>
+            <option value="sha1">SHA1</option>
+            <option value="sha256">SHA256</option>
+            <option value="sha384">SHA384</option>
+            <option value="sha512">SHA512</option>
+            <option value="ripemd128">RIPEMD128</option>
+            <option value="ripemd160">RIPEMD160</option>
+            <option value="ripemd256">RIPEMD256</option>
+            <option value="ripemd320">RIPEMD320</option>
+            <option value="rot13">ROT13</option>
+            <option value="des_std">DES STD</option>
+            <option value="whirlpool">WHIRLPOOL</option>
+            <option value="tiger128,3">TIGER128,3</option>
+            <option value="tiger160,3">TIGER160,3</option>
+            <option value="tiger192,3">TIGER192,3</option>
+            <option value="tiger128,4">TIGER128,4</option>
+            <option value="tiger160,4">TIGER160,4</option>
+            <option value="tiger192,4">TIGER192,4</option>
+            <option value="snefru">SNEFRU</option>
+            <option value="adler32">ADLER32</option>
+            <option value="crc32">CRC32</option>
+            <option value="crc32b">CRC32B</option>
+            <option value="haval128,3">HAVAL128,3</option>
+            <option value="haval160,3">HAVAL160,3</option>
+            <option value="haval192,3">HAVAL192,3</option>
+            <option value="haval224,3">HAVAL224,3</option>
+            <option value="haval256,3">HAVAL256,3</option>
+            <option value="haval128,4">HAVAL128,4</option>
+            <option value="haval160,4">HAVAL160,4</option>
+            <option value="haval192,4">HAVAL192,4</option>
+            <option value="haval224,4">HAVAL224,4</option>
+            <option value="haval256,5">HAVAL256,5</option>
+            <option value="haval128,5">HAVAL128,5</option>
+            <option value="haval160,5">HAVAL160,5</option>
+            <option value="haval192,5">HAVAL192,5</option>
+            <option value="haval224,5">HAVAL224,5</option>
+            <option value="haval256,5">HAVAL256,5</option>
+            <option value="htpasswd">HTPASSWD</option>
+        </select> 
+        <input type="button" name="hashr_bttn" id="hashr_bttn" value="Hash it!" /></p>
+    </div>
+    <div id="result_container">
+        <p id="loading_area"><img src="/images/loader.gif" alt="loading..." /></p>
+        <p id="result_area">
+            <input type="text" name="result" id="result" value="" size="40" readonly="1" />
+            <input type="button" name="copy_button" id="copy_button" title="Copy to clipboard" />
+        </p>
+    </div>
 </div>
-<script type="text/javascript" src="/js/hashr.js"></script>
