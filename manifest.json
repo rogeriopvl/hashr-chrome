@@ -1,17 +1,18 @@
 {
     "manifest_version": 2,
-	"name":  "hashr",
-	"version": "0.5.1",
-	"description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
-	"browser_action": {
-		"default_icon": "images/icon.png",
-		"default_popup": "popup.html"
-	},
-	"icons": {
-		"48": "images/icon48.png",
-		"128": "images/icon128.png"
-	},
-	"permissions": [
-		"tabs", "http://rogeriopvl.com/"
-	]
+    "name":  "hashr",
+    "version": "0.5.2",
+    "description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
+    "browser_action": {
+        "default_icon": "images/icon.png",
+        "default_title": "hashr",
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "permissions": [
+        "tabs", "http://rogeriopvl.com/"
+    ]
 }
