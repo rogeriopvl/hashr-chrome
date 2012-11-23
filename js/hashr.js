@@ -22,7 +22,7 @@ var hashrExtension = {
         document.getElementById("result_area").style.display = "none";
         document.getElementById("loading_area").style.display = "block";
         
-        var remoteURL = "http://rogeriopvl.com/hashr/api2/hash";
+        var remoteURL = "http://hashr.rogeriopvl.com/api2/hash";
         var developmentURL = 'http://localhost/hashr_website/api2/hash';
 
         /* remoteURL = developmentURL; */
