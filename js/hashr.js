@@ -8,8 +8,6 @@
 
     var hashrExtension = {
 
-        request: null,
-
         makeRequest: function (method, url, params, cb) {
             params = params || null;
 
@@ -42,10 +40,20 @@
         },
 
         getAlgos: function () {
-            var algosURL = 'http://hashr.rogeriopvl.com/api2/algos';
-            this.makeRequest('GET', algosURL, null, function(data, status){
-                this.fillAlgos(JSON.parse(data));
-            }.bind(this));
+            var that = this;
+            chrome.storage.local.get('algos', function (value) {
+                if (!value.algos) {
+                    var algosURL = 'http://hashr.rogeriopvl.com/api2/algos';
+                    that.makeRequest('GET', algosURL, null, function (data, status) {
+                        var algosList = JSON.parse(data);
+                        this.fillAlgos(algosList);
+                        chrome.storage.local.set({ algos: algosList });
+                    }.bind(that));
+                } else {
+                    console.log('Got value from cache!');
+                    that.fillAlgos(value.algos);
+                }
+            });
         },
 
         makeHash: function () {
