@@ -38,10 +38,12 @@
 
 <div id="container">
     <div id="input_area">
-        <p><input type="text" name="str" id="str" size="30" />
-        <select name="hashtype" id="hashtype" class="selectform">
-        </select>
-        <input type="button" name="hashr_bttn" id="hashr_bttn" value="Hash it!" /></p>
+        <form id="hash_form">
+            <p><input type="text" name="str" id="str" size="30" />
+            <select name="hashtype" id="hashtype" class="selectform">
+            </select>
+            <input type="submit" name="hashr_bttn" id="hashr_bttn" value="Hash it!" /></p>
+        </form>
     </div>
     <div id="result_container">
         <p id="loading_area"><img src="/images/loader.gif" alt="loading..." /></p>

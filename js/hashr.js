@@ -121,8 +121,11 @@
     hashrExtension.getAlgos();
 
     document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('hashr_bttn')
-        .addEventListener('click', hashrExtension.makeHash.bind(hashrExtension));
+        document.getElementById('hash_form')
+        .addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            hashrExtension.makeHash();
+        });
         document.getElementById('copy_button')
         .addEventListener('click', hashrExtension.copyHash.bind(hashrExtension));
     });
