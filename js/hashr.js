@@ -8,6 +8,8 @@
 
     var hashrExtension = {
 
+        lastUsedAlgo: null,
+
         makeRequest: function (method, url, params, cb) {
             params = params || null;
 
@@ -28,20 +30,21 @@
         },
 
         fillAlgos: function (algos) {
+            var that = this;
             algos.forEach(function(item) {
                 var opt = document.createElement('option');
                 opt.value = item;
                 opt.innerHTML = item;
-                if (item === 'md5') {
+                if (item === this.lastUsedAlgo) {
                     opt.selected = true;
                 }
                 document.getElementById('hashtype').appendChild(opt);
-            });
+            }.bind(this));
         },
 
         getAlgos: function () {
             var that = this;
-            chrome.storage.local.get('algos', function (value) {
+            chrome.storage.local.get(null, function (value) {
                 if (!value.algos) {
                     var algosURL = 'http://hashr.rogeriopvl.com/api2/algos';
                     that.makeRequest('GET', algosURL, null, function (data, status) {
@@ -50,7 +53,7 @@
                         chrome.storage.local.set({ algos: algosList });
                     }.bind(that));
                 } else {
-                    console.log('Got value from cache!');
+                    that.lastUsedAlgo = value.favorite;
                     that.fillAlgos(value.algos);
                 }
             });
@@ -61,6 +64,8 @@
             var str = document.getElementById('str').value;
             var hashtype = document.getElementById('hashtype').value;
             var params = 'str=' + str + '&hashtype=' + hashtype + '&client_app=chrome';
+
+            chrome.storage.local.set({ favorite: hashtype });
 
             document.getElementById('result_area').style.display = 'none';
             document.getElementById('loading_area').style.display = 'block';
