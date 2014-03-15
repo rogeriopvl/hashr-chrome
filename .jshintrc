@@ -1,0 +1,8 @@
+{
+    "strict": true,
+    "indent": 4,
+    "unused": false,
+    "trailing": true,
+    "quotmark": "single",
+    "globals": { "document": true, "window": true }
+}
