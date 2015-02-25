@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name":  "hashr",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
     "browser_action": {
         "default_icon": "images/icon.png",
