@@ -6,6 +6,8 @@
 (function () {
     'use strict';
 
+    var API_URL = 'https://hashr.rogeriopvl.com/api2';
+
     var hashrExtension = {
 
         lastUsedAlgo: null,
@@ -46,7 +48,7 @@
             var that = this;
             chrome.storage.local.get(null, function (value) {
                 if (!value.algos) {
-                    var algosURL = 'http://hashr.rogeriopvl.com/api2/algos';
+                    var algosURL = API_URL + '/algos';
                     that.makeRequest('GET', algosURL, null, function (data, status) {
                         var algosList = JSON.parse(data);
                         this.fillAlgos(algosList);
@@ -70,10 +72,7 @@
             document.getElementById('result_area').style.display = 'none';
             document.getElementById('loading_area').style.display = 'block';
 
-            var remoteURL = 'http://hashr.rogeriopvl.com/api2/hash';
-            var developmentURL = 'http://localhost/hashr_website/api2/hash';
-
-            /* remoteURL = developmentURL; */
+            var remoteURL = API_URL + '/hash';
 
             this.makeRequest('POST', remoteURL, params, function(data, status) {
                 if (status === 200) {
