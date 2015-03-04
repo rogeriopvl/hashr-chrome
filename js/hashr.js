@@ -10,6 +10,17 @@
 
     var hashrExtension = {
 
+        offlineAlgos: [
+            'md5',
+            'sha1',
+            'sha256',
+            'sha512',
+            'sha3',
+            'ripemd160'
+        ],
+
+        offlineMode: false,
+
         lastUsedAlgo: null,
 
         makeRequest: function (method, url, params, cb) {
@@ -32,7 +43,7 @@
         },
 
         fillAlgos: function (algos) {
-            var that = this;
+            document.getElementById('hashtype').innerHTML = '';
             algos.forEach(function(item) {
                 var opt = document.createElement('option');
                 opt.value = item;
@@ -45,6 +56,14 @@
         },
 
         getAlgos: function () {
+            if (this.offlineMode) {
+                chrome.storage.local.set({ offline: true });
+                this.fillAlgos(this.offlineAlgos);
+                return;
+            }
+
+            chrome.storage.local.set({ offline: false });
+
             var that = this;
             chrome.storage.local.get(null, function (value) {
                 if (!value.algos) {
@@ -67,27 +86,38 @@
             var hashtype = document.getElementById('hashtype').value;
             var params = 'str=' + str + '&hashtype=' + hashtype + '&client_app=chrome';
 
+            var loadingArea = document.getElementById('loading_area');
+            var resultArea = document.getElementById('result_area');
+
             chrome.storage.local.set({ favorite: hashtype });
 
-            document.getElementById('result_area').style.display = 'none';
-            document.getElementById('loading_area').style.display = 'block';
+            resultArea.style.display = 'none';
+            loadingArea.style.display = 'block';
 
             var remoteURL = API_URL + '/hash';
 
-            this.makeRequest('POST', remoteURL, params, function(data, status) {
+            var hashCallback = function (data, status, msg) {
+                var resultEl = document.getElementById('result');
+
                 if (status === 200) {
-                    document.getElementById('loading_area').style.display = 'none';
-                    document.getElementById('result_area').style.display = 'block';
-                    document.getElementById('result').setAttribute('value', data);
+                    loadingArea.style.display = 'none';
+                    resultArea.style.display = 'block';
+                    resultEl.setAttribute('value', data);
                 } else { // error case
-                    document.getElementById('loading_area').style.display = 'none';
-                    document.getElementById('result_area').style.display = 'block';
-                    document.getElementById('result').setAttribute(
-                        'value',
-                        'Error contacting server...'
-                    );
+                    loadingArea.style.display = 'none';
+                    resultArea.style.display = 'block';
+                    resultEl.setAttribute('value', msg || 'Error contacting server...');
                 }
-            });
+            };
+
+            if (this.offlineMode) {
+                if (!CryptoJS.hasOwnProperty(hashtype.toUpperCase())) {
+                    return hashCallback('', 400, 'Unknown hashing algorithm');
+                }
+                var hashObj = CryptoJS[hashtype.toUpperCase()](str);
+                return hashCallback(hashObj.toString(CryptoJS.enc.Hex), 200);
+            }
+            return this.makeRequest('POST', remoteURL, params, hashCallback);
         },
 
         copyHash: function () {
@@ -120,6 +150,12 @@
     hashrExtension.getAlgos();
 
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('offlineMode')
+        .addEventListener('click', function (ev) {
+            hashrExtension.offlineMode = this.checked;
+            hashrExtension.getAlgos();
+        });
+
         document.getElementById('hash_form')
         .addEventListener('submit', function (ev) {
             ev.preventDefault();
