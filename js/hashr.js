@@ -101,8 +101,14 @@
                     resultArea.style.display = 'block';
                     resultEl.setAttribute('value', data);
                 } else { // error case
+                    try {
+                        data = JSON.parse(data);
+                    } catch (e) {
+                        data = false;
+                    }
                     loadingArea.style.display = 'none';
                     resultArea.style.display = 'block';
+                    msg = (!msg && status < 500) ? 'Error: ' + data.message : msg;
                     resultEl.setAttribute('value', msg || 'Error contacting server...');
                 }
             };
