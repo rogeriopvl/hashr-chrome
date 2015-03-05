@@ -30,7 +30,19 @@ input[type="submit"]:hover, button:hover {
 }
 
 .button-panel {
-    display: inline-block;
+    display: inline;
+
+    .logo {
+        span {
+            color: #db33bc;
+        }
+        font-size: 25px;
+        font-weight: bold;
+    }
+}
+
+#hashr_bttn {
+    width: 66px;
 }
 
 #helpBtn {

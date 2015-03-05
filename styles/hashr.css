@@ -26,7 +26,15 @@ input[type="submit"]:hover, button:hover {
   background-color: #02C66F; }
 
 .button-panel {
-  display: inline-block; }
+  display: inline; }
+  .button-panel .logo {
+    font-size: 25px;
+    font-weight: bold; }
+    .button-panel .logo span {
+      color: #db33bc; }
+
+#hashr_bttn {
+  width: 66px; }
 
 #helpBtn {
   color: #666;
