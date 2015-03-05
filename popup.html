@@ -1,62 +1,45 @@
+<!DOCTYPE html>
 <head>
-    <style type="text/css">
-        body {
-            width: 360px;
-            background-color: #b7d6e6;
-            font-size: 12px;
-            padding: 10px;
-        }
-        #result_area, #loading_area {
-            display: none;
-            text-align: center;
-        }
-        #input_area {
-            text-align: center;
-        }
-        #copy_button {
-            background: url(/images/copy_up.png) no-repeat;
-            border: 0;
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            margin-top: 4px;
-        }
-        #copy_button:hover {
-            background: url(/images/copy_over.png) no-repeat;
-        }
-        #copy_button:active {
-            background: url(/images/copy_down.png) no-repeat;
-        }
-        #copied {
-            position: absolute;
-            margin-left: 20px;
-            margin-top: 4px;
-        }
-    </style>
-    <script type="text/javascript" src="/js/hashr.js"></script>
-    <script type="text/javascript" src="/js/vendor/md5.js"></script>
-    <script type="text/javascript" src="/js/vendor/sha1.js"></script>
-    <script type="text/javascript" src="/js/vendor/sha256.js"></script>
-    <script type="text/javascript" src="/js/vendor/sha512.js"></script>
-    <script type="text/javascript" src="/js/vendor/sha3.js"></script>
-    <script type="text/javascript" src="/js/vendor/ripemd160.js"></script>
+    <link rel="stylesheet" href="styles/hashr.css">
+    <link rel="stylesheet" href="styles/font-awesome.min.css">
 </head>
 
 <div id="container">
-    <label>Offline mode: </label><input id="offlineMode" type="checkbox">
+    <div class="button-panel">
+        <input id="offlineMode" class="tgl tgl-flip" type="checkbox"><label class="tgl-btn" for="offlineMode" data-tg-on="offline" data-tg-off="online"></label>
+        <button id="helpBtn"><i class="fa fa-question-circle"></i></button>
+    </div>
+
     <div id="input_area">
         <form id="hash_form">
-            <p><input type="text" name="str" id="str" size="30" />
-            <select name="hashtype" id="hashtype" class="selectform">
-            </select>
-            <input type="submit" name="hashr_bttn" id="hashr_bttn" value="Hash it!" /></p>
+                <input type="text" name="str" id="str" size="30" class="clean-slide" placeholder="Insert text to hash...">
+                <div class="select-style">
+                    <select name="hashtype" id="hashtype" class="selectform"></select>
+                </div>
+                <input type="submit" name="hashr_bttn" class="custom-btn" id="hashr_bttn" value="Hash it!">
         </form>
     </div>
     <div id="result_container">
-        <p id="loading_area"><img src="/images/loader.gif" alt="loading..." /></p>
+        <p id="loading_area"><img src="/images/loader.gif" alt="loading..."></p>
         <p id="result_area">
-            <input type="text" name="result" id="result" value="" size="40" readonly="1" />
-            <input type="button" name="copy_button" id="copy_button" title="Copy to clipboard" />
+            <input type="text" name="result" id="result" class="clean-slide" value="" size="40" readonly="1">
+            <button name="copy_button" id="copy_button" title="Copy to clipboard"><i class="fa fa-copy"></i></button>
         </p>
     </div>
+
+    <div id="help" hidden>
+        <h3>What is online and offline mode?</h3>
+        <p>Click the online/offline button to switch between modes.</p>
+        <p><b>Offline mode</b> allows you to create hashes offline (no request is made to a server).</p>
+        <p>In <b>offline mode</b> only a subset of hashing algorithms are available (this might change in the future).</p>
+        <p><b>Online mode</b> creates hashes in a server (via api). It supports a wider range of hashing algorithms. Your privacy is respected, no info about your request is stored, and communication is done via https.</p>
+    </div>
 </div>
+
+<script type="text/javascript" src="/js/hashr.js"></script>
+<script type="text/javascript" src="/js/vendor/md5.js"></script>
+<script type="text/javascript" src="/js/vendor/sha1.js"></script>
+<script type="text/javascript" src="/js/vendor/sha256.js"></script>
+<script type="text/javascript" src="/js/vendor/sha512.js"></script>
+<script type="text/javascript" src="/js/vendor/sha3.js"></script>
+<script type="text/javascript" src="/js/vendor/ripemd160.js"></script>

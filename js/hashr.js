@@ -57,12 +57,9 @@
 
         getAlgos: function () {
             if (this.offlineMode) {
-                chrome.storage.local.set({ offline: true });
                 this.fillAlgos(this.offlineAlgos);
                 return;
             }
-
-            chrome.storage.local.set({ offline: false });
 
             var that = this;
             chrome.storage.local.get(null, function (value) {
@@ -147,12 +144,19 @@
         },
     };
 
-    hashrExtension.getAlgos();
-
     document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('offlineMode')
-        .addEventListener('click', function (ev) {
+        var offlineCheckbox = document.getElementById('offlineMode');
+        var helpBox = document.getElementById('help');
+
+        chrome.storage.local.get(null, function (value) {
+            offlineCheckbox.checked = value.offline;
+            hashrExtension.offlineMode = value.offline;
+            hashrExtension.getAlgos();
+        });
+
+        offlineCheckbox.addEventListener('click', function (ev) {
             hashrExtension.offlineMode = this.checked;
+            chrome.storage.local.set({ offline: this.checked });
             hashrExtension.getAlgos();
         });
 
@@ -163,5 +167,9 @@
         });
         document.getElementById('copy_button')
         .addEventListener('click', hashrExtension.copyHash.bind(hashrExtension));
+
+        document.getElementById('helpBtn').addEventListener('click', function () {
+            helpBox.hidden = !helpBox.hidden;
+        });
     });
 }());
