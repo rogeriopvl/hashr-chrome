@@ -4,13 +4,17 @@
     "version": "0.6.2",
     "description": "Create cryptographic hashes in more than 40 algorithms right in your browser.",
     "browser_action": {
-        "default_icon": "images/icon.png",
+        "default_icon": {
+            "19": "images/hashr19.png",
+            "38": "images/hashr38.png"
+        },
         "default_title": "hashr",
         "default_popup": "popup.html"
     },
     "icons": {
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/hashr16.png",
+        "48": "images/hashr48.png",
+        "128": "images/hashr128.png"
     },
     "permissions": [
         "tabs", "https://hashr.rogeriopvl.com/", "storage"
